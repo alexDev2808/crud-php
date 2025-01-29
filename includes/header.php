@@ -1,3 +1,20 @@
+<?php
+  session_start();
+
+  if(!empty($_SESSION["activo"])){
+    header("Location:panel.php");
+  }
+
+    // Obtener demas variables
+    $idUsuario = $_SESSION["idUsuario"];
+    $nombre = $_SESSION["nombre"];
+    $email = $_SESSION["email"];
+
+    // Incluir conexión global
+    include_once("conexion_sqlserver.php");
+?>
+
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from

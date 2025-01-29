@@ -1,3 +1,50 @@
+<?php
+  session_start();
+
+  if( !empty($_SESSION["activo"]) ) {
+    header("Location:panel.php");
+  }
+
+  // Incluir conexión
+  include_once("conexion_sqlserver.php");
+
+  if( isset($_POST["ingresar"])) {
+    $email = $_POST["email"];
+    $password = md5($_POST["password"]);
+
+    if( !empty($email) && $email != "" && !empty($password) && !$password != "") {
+
+      $query = "SELECT id,email,nombre,telefono,password,es_admin FROM usuario 
+                    WHERE email=:email AND password=:password";
+
+      $stmt = $conn->prepare($query);
+
+      $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+      $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+
+      $resultado = $stmt->execute();
+      $registro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if( !$registro ) {
+        $error = "Error, acceso no valido";
+      } else {
+        // Creamos las sesiones
+        $_SESSION['activo'] = true;
+        $_SESSION['idUsuario'] = $registro['id'];
+        $_SESSION['nombre'] = $registro['nombre'];
+        $_SESSION['email'] = $registro['email'];
+        $_SESSION['esAdmin'] = $registro['es_admin'];
+
+        // Redirigir al panel
+        header('Location:panel.php');
+      }
+    } else {
+      $error = 'Error, algunos campos estan vacios';
+    }
+  }
+?>
+
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -29,29 +76,17 @@
   </head>
   <body class="hold-transition login-page">
 
-  <div class="row">
-    <div class="col-sm-12">
-   
-
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Mensaje
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>           
-
-      
-    </div>
-</div>
 
   <div class="row">
     <div class="col-sm-12">
-      
+         <?php if(isset($error)) : ?> 
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error</strong> 
+                <strong><?php echo $error; ?></strong> 
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-      
+          <?php endif; ?>
     </div>
 </div>
 
