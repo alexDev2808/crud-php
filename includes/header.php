@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if(!empty($_SESSION["activo"])){
+  if(!$_SESSION["activo"]){
     header("Location:panel.php");
   }
 

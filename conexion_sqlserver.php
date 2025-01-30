@@ -9,7 +9,7 @@ require_once("env.php");
     $dbserver = $DB_Server;
     $dbname = $DB_Name;
 
-    $dsn = "sqlsrv:Server=$dbserver;Database=$dbname";
+    $dsn = "sqlsrv:Server=$dbserver;Database=$dbname;TrustServerCertificate=true";
 
     try {
         // Crear conexion a SQL Server
@@ -23,4 +23,5 @@ require_once("env.php");
         echo $e->getMessage();
     }
 
-    echo $dsn;
+
+?>
