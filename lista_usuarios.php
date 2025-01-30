@@ -1,5 +1,14 @@
 <?php include "includes/header.php" ?>
 
+<?php
+
+  // Mostrar registros
+  $query = "SELECT * FROM usuario";
+  $stmt = $conn->query($query);
+  $usuarios = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+?>
+
               <div class="card-header">               
                 <div class="row">
                   <div class="col-md-9">
@@ -22,14 +31,14 @@
                   </tr>
                   </thead>
                   <tbody>
-                
+                  <?php foreach ($usuarios as $usuario): ?>
                    <tr>
-                          <td>1</td>
-                          <td>admin@render2web.com</td>
-                          <td>jose montoya</td>
-                          <td>3333333</td>
+                          <td><?php echo $usuario->id; ?></td>
+                          <td><?php echo $usuario->email; ?></td>
+                          <td><?php echo $usuario->nombre; ?></td>
+                          <td><?php echo $usuario->telefono; ?></td>
                     </tr> 
-                 
+                  <?php endforeach; ?>
                   </tbody>                  
                 </table>
               </div>

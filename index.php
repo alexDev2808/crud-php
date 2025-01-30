@@ -12,7 +12,7 @@
     $email = $_POST["email"];
     $password = md5($_POST["password"]);
 
-    if( !empty($email) && $email != "" && !empty($password) && !$password != "") {
+    if( !empty($email) && $email != "" && !empty($password) && $password != "") {
 
       $query = "SELECT id,email,nombre,telefono,password,es_admin FROM usuario 
                     WHERE email=:email AND password=:password";

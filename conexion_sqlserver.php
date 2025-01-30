@@ -17,7 +17,7 @@ require_once("env.php");
 
         // Comprobar conexión
         if( $conn ) {
-            echo "Conexión exitosa!";
+            // Mensaje de conexion exitosa
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
